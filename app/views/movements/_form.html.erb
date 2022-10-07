@@ -1,0 +1,67 @@
+<%= form_with(model: [current_user, movement.enterprise, movement]) do |form| %>
+  <% if movement.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(movement.errors.count, "error") %> prohibited this movement from being saved:</h2>
+
+      <ul>
+        <% movement.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-4">
+      <%= form.label :countable_type, class: 'form-control-label' %>
+      <%= form.select :countable_type, [['Ingreso', 'income'], ['Egreso', 'cost']], { prompt: 'Seleccionar Cuenta' }, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col-4">
+      <%= form.label :enterprise_id, class: 'form-control-label' %>
+      <%= form.collection_select :enterprise_id, current_user.enterprises, :id, :name, { prompt: 'Seleccionar empresa' }, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      <%= form.label :name, class: 'form-control-label' %>
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col-4">
+      <%= form.label :description, class: 'form-control-label' %>
+      <%= form.text_field :description, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col-4">
+      <%= form.label :issue_date, class: 'form-control-label' %>
+      <%= form.date_select :issue_date, {}, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      <%= form.label :net, class: 'form-control-label' %>
+      <%= form.number_field :net, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      <%= form.label :total_iva, class: 'form-control-label' %>
+      <%= form.number_field :total_iva, class: 'form-control' %>
+    </div>
+  </div>
+<br />
+  <div class="row">
+    <div class="col-4">
+      <%= form.submit class: "btn btn-success"%>
+    </div>
+  </div>
+<% end %>

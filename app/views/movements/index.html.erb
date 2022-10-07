@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Movements</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tipo de movement</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Issue date</th>
+      <th>Net</th>
+      <th>Total iva</th>
+      <th>Amount</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @movements.order(:countable_type).each do |movement| %>
+      <tr>
+        <td><%= movement.countable_type %></td>
+        <td><%= movement.name %></td>
+        <td><%= movement.description %></td>
+        <td><%= movement.issue_date %></td>
+        <td><%= movement.net %></td>
+        <td><%= movement.total_iva %></td>
+        <td><%= movement.amount %></td>
+        <td><%= link_to 'Show', movement %></td>
+        <td><%= link_to 'Edit', edit_movement_path(movement) %></td>
+        <td><%= link_to 'Destroy', movement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Item', new_movement_path %> |
+<%= link_to 'Inicio', home_index_path %>

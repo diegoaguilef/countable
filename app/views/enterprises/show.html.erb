@@ -1,0 +1,100 @@
+<% if notice %>
+  <div class="container-fluid">
+    <p id="notice"><%= notice %></p>
+  </div>
+<% end %>
+<div class="container-fluid">
+  <div class="card border-primary">
+    <div class="card-header bg-primary">
+      <h1>Empresa</h1>
+      <%= link_to '' %>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <strong>Nombre:</strong>
+          <%= @enterprise.name %>
+        </div>
+        <div class="col">
+          <strong>Razon social:</strong>
+          <%= @enterprise.business_name %>
+        </div>
+        <div class="col">
+          <strong>Rut:</strong>
+          <%= "#{@enterprise.rut}-#{@enterprise.dv}" %>
+        </div>
+        <div class="col">
+          <strong>Owner:</strong>
+          <%= @enterprise.user.name %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="card border-primary">
+    <h1 class="card-header">Movimientos</h1>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Tipo de movement</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Issue date</th>
+          <th>Net</th>
+          <th>Total iva</th>
+          <th>Amount</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @enterprise.movements.order(:countable_type).each do |movement| %>
+          <tr>
+            <td><%= movement.countable_type %></td>
+            <td><%= movement.name %></td>
+            <td><%= movement.description %></td>
+            <td><%= movement.issue_date %></td>
+            <td><%= movement.net %></td>
+            <td><%= movement.total_iva %></td>
+            <td><%= movement.amount %></td>
+            <td>
+              <div class="btn-group">
+                <%= link_to '<i class="icon-eye"></i>'.html_safe,
+                            user_enterprise_movement_path(current_user, @enterprise, movement, format: :js),
+                            remote: true, class: 'btn btn-primary btn-sm'
+                %>
+                <%= link_to '<i class="far fa-edit"></i>'.html_safe,
+                            edit_user_enterprise_movement_path(current_user, @enterprise, movement),
+                            class: 'btn btn-warning btn-sm' %>
+                <%= link_to '<i class="fas fa-trash-alt"></i>'.html_safe,
+                            user_enterprise_movement_path(current_user, @enterprise, movement),
+                            method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="show_movement" tabindex="-1" aria-labelledby="exampleModalCenterTitle">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Movimiento</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-body" id="movement_detail"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<%= link_to 'Atras', home_index_path, class: 'btn btn-primary' %>

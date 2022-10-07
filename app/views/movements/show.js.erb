@@ -1,0 +1,7 @@
+
+var movement_detail = $('#movement_detail')
+var movement_modal = $('#show_movement')
+movement_detail.html('')
+movement_detail.html("<%= j(render('show')) %>")
+movement_modal.appendTo("body")
+movement_modal.modal('toggle');

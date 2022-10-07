@@ -1,0 +1,25 @@
+<h1>Perfil</h1>
+<p>Nombre: <%= current_user.name %></p>
+<p>Email: <%= current_user.email %></p>
+
+<h2>Empresas</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Nombre</th>
+    <th>Razón social</th>
+    <th>Rut</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% current_user.enterprises.each do |enterprise| %>
+    <tr>
+      <td><%= enterprise.name %></td>
+      <td><%= enterprise.business_name %></td>
+      <td><%= enterprise.rut.to_s + "-" + enterprise.dv.to_s %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<br />
+<%= link_to "Inicio", home_index_path %>
